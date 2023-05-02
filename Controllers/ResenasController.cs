@@ -22,9 +22,11 @@ namespace Final_Cordero_Raura.Controllers
         // GET: Resenas
         public async Task<IActionResult> Index()
         {
-              return _context.Resena != null ? 
-                          View(await _context.Resena.ToListAsync()) :
-                          Problem("Entity set 'Final_Cordero_RauraContext.Resena'  is null.");
+
+            // agregar un punto de interrupción aquí y revisar el valor de "Texto" para una de las reseñas cargadas
+            var resenas = await _context.Resena.ToListAsync();
+            // enviar la lista de reseñas a la vista Index
+            return View(resenas);
         }
 
         // GET: Resenas/Details/5
@@ -36,6 +38,9 @@ namespace Final_Cordero_Raura.Controllers
             }
 
             var resena = await _context.Resena
+                //Aqui modifique segun openIA
+                .Include(r => r.Pelicula)
+                ////////////////////////////////
                 .FirstOrDefaultAsync(m => m.IdResena == id);
             if (resena == null)
             {
@@ -83,6 +88,9 @@ namespace Final_Cordero_Raura.Controllers
             {
                 return NotFound();
             }
+            //Aqui modifico y meto la siguiente linea
+            ViewBag.Peliculas = _context.Pelicula.Select(p => new SelectListItem { Value = p.IdPelicula.ToString(), Text = p.Nombre }).ToList();
+            ///////////////
             return View(resena);
         }
 
@@ -130,6 +138,9 @@ namespace Final_Cordero_Raura.Controllers
             }
 
             var resena = await _context.Resena
+                //Aqui modifique segun openIA
+                .Include(r => r.Pelicula)
+                ////////////////////////////////
                 .FirstOrDefaultAsync(m => m.IdResena == id);
             if (resena == null)
             {

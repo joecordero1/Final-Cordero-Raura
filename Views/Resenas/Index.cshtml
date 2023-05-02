@@ -31,7 +31,7 @@
                 @Html.DisplayFor(modelItem => item.Titulo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Texto)
+                @Html.Raw(item.Texto)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdPelicula)

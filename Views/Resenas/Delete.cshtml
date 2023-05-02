@@ -23,11 +23,12 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Texto)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdPelicula)
+        @*Esto está modificado para que ya no muetre Id, sino solo nombre*@
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Pelicula.Nombre)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdPelicula)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Pelicula.Nombre)
         </dd>
     </dl>
     

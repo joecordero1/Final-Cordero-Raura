@@ -7,7 +7,8 @@ namespace Final_Cordero_Raura.Models
         [Key]
         public int IdResena { get; set; }
         public string? Titulo { get; set; }
-
+        //[Required]
+        //[MaxLength]
         [DataType(DataType.Html)]
         public string? Texto { get; set; }
 
