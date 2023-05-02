@@ -48,6 +48,9 @@ namespace Final_Cordero_Raura.Controllers
         // GET: Resenas/Create
         public IActionResult Create()
         {
+            //Aqui modifico y meto la siguiente linea
+            ViewBag.Peliculas = _context.Pelicula.Select(p => new SelectListItem { Value = p.IdPelicula.ToString(), Text = p.Nombre }).ToList();
+            ///////////////
             return View();
         }
 
