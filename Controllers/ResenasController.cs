@@ -22,10 +22,7 @@ namespace Final_Cordero_Raura.Controllers
         // GET: Resenas
         public async Task<IActionResult> Index()
         {
-
-            // agregar un punto de interrupción aquí y revisar el valor de "Texto" para una de las reseñas cargadas
-            var resenas = await _context.Resena.ToListAsync();
-            // enviar la lista de reseñas a la vista Index
+            var resenas = _context.Resena.Include(r => r.Pelicula).ToList();
             return View(resenas);
         }
 
@@ -67,11 +64,17 @@ namespace Final_Cordero_Raura.Controllers
         public async Task<IActionResult> Create([Bind("IdResena,Titulo,Texto,IdPelicula")] Resena resena)
         {
             if (ModelState.IsValid)
-            {
+            {   //Estas dos lineas de codigo arreglaron el problema con el html
+                string htmlContent = Request.Form["Texto"];
+                resena.Texto = htmlContent;
+                ////////////////////////////
                 _context.Add(resena);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            //y esta tambien
+            ViewData["IdPelicula"] = new SelectList(_context.Pelicula, "IdPelicula", "Titulo", resena.IdPelicula);
+            //////////////////
             return View(resena);
         }
 
@@ -110,6 +113,10 @@ namespace Final_Cordero_Raura.Controllers
             {
                 try
                 {
+                    //las siguientes dos lineas hacen que sirva guardar el contenido del html
+                    string texto = Request.Form["Texto"].ToString();
+                    resena.Texto = texto;
+                    //////////////////////
                     _context.Update(resena);
                     await _context.SaveChangesAsync();
                 }
@@ -126,6 +133,9 @@ namespace Final_Cordero_Raura.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            //esta liena tambien 
+            ViewData["IdPelicula"] = new SelectList(_context.Pelicula, "IdPelicula", "Titulo", resena.IdPelicula);
+            //////////////
             return View(resena);
         }
 

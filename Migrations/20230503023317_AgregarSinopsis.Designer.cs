@@ -4,6 +4,7 @@ using Final_Cordero_Raura.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Final_Cordero_Raura.Migrations
 {
     [DbContext(typeof(Final_Cordero_RauraContext))]
-    partial class Final_Cordero_RauraContextModelSnapshot : ModelSnapshot
+    [Migration("20230503023317_AgregarSinopsis")]
+    partial class AgregarSinopsis
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

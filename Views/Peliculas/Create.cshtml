@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Create";
 }
+<!--Para que funcione debemos llamar al script del ckeditor-->
+<script src="~/lib/ckeditor/ckeditor.js"></script>
 
 <h1>Create</h1>
 
@@ -17,10 +19,14 @@
                 <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
+            <!--Esto sirve para llamar al editor html ckeditor-->
             <div class="form-group">
-                <label asp-for="Descripcion" class="control-label"></label>
-                <input asp-for="Descripcion" class="form-control" />
-                <span asp-validation-for="Descripcion" class="text-danger"></span>
+                <!--Esto sirve para llamar al editor html ckeditor-->
+                <div class="form-group">
+                    <label asp-for="Descripcion" class="control-label"></label>
+                    <textarea asp-for="Descripcion" class="ckeditor"></textarea>
+                    @*<textarea class="ckeditor" name="contenido"></textarea>*@
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="Genero" class="control-label"></label>
@@ -50,4 +56,13 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/ckeditor/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('.ckeditor'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 }

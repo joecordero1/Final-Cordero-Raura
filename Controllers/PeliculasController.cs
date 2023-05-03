@@ -22,9 +22,10 @@ namespace Final_Cordero_Raura.Controllers
         // GET: Peliculas
         public async Task<IActionResult> Index()
         {
-              return _context.Pelicula != null ? 
-                          View(await _context.Pelicula.ToListAsync()) :
-                          Problem("Entity set 'Final_Cordero_RauraContext.Pelicula'  is null.");
+            // agregar un punto de interrupción aquí y revisar el valor de "Texto" para una de las reseñas cargadas
+            var resenas = await _context.Pelicula.ToListAsync();
+            // enviar la lista de reseñas a la vista Index
+            return View(resenas);
         }
 
         // GET: Peliculas/Details/5
@@ -48,6 +49,9 @@ namespace Final_Cordero_Raura.Controllers
         // GET: Peliculas/Create
         public IActionResult Create()
         {
+            //Aqui modifico y meto la siguiente linea
+            ViewBag.Resenas = _context.Resena.Select(p => new SelectListItem { Value = p.IdPelicula.ToString(), Text = p.Titulo }).ToList();
+            ///////////////
             return View();
         }
 
@@ -60,10 +64,18 @@ namespace Final_Cordero_Raura.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Estas dos lineas de codigo arreglaron el problema con el html
+                string htmlContent = Request.Form["Descripcion"];
+                pelicula.Descripcion = htmlContent;
+                ////////////////////////////
                 _context.Add(pelicula);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            //y esta tambien
+            //ViewData["IdPelicula"] = new SelectList(_context.Pelicula, "IdPelicula", "Descripcion", pelicula.IdPelicula);
+
+            //////////////////
             return View(pelicula);
         }
 
@@ -80,6 +92,9 @@ namespace Final_Cordero_Raura.Controllers
             {
                 return NotFound();
             }
+            //Aqui modifico y meto la siguiente linea
+            ViewBag.Resenas = _context.Resena.Select(p => new SelectListItem { Value = p.IdPelicula.ToString(), Text = p.Titulo }).ToList();
+            ///////////////
             return View(pelicula);
         }
 
@@ -99,6 +114,10 @@ namespace Final_Cordero_Raura.Controllers
             {
                 try
                 {
+                    //las siguientes dos lineas hacen que sirva guardar el contenido del html
+                    var texto = Request.Form["Descripcion"].ToString();
+                    pelicula.Descripcion = texto;
+                    //////////////////////
                     _context.Update(pelicula);
                     await _context.SaveChangesAsync();
                 }
@@ -115,6 +134,10 @@ namespace Final_Cordero_Raura.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            //NO SE QUE HICE AQUI, MODIFICAR POR SI ACASO
+            //esta liena tambien 
+            ViewData["Descripcion"] = new SelectList(_context.Pelicula, "Genero", "Descripcion", pelicula.Descripcion);
+            //////////////
             return View(pelicula);
         }
 
@@ -127,6 +150,9 @@ namespace Final_Cordero_Raura.Controllers
             }
 
             var pelicula = await _context.Pelicula
+                //Aqui modifique segun openIA//modificado como tres veces, puede que este mal
+                .Include(r => r.Resenas)
+                ////////////////////////////////
                 .FirstOrDefaultAsync(m => m.IdPelicula == id);
             if (pelicula == null)
             {

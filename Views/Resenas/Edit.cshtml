@@ -21,8 +21,11 @@
                 <span asp-validation-for="Titulo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <!--Esto sirve para llamar al editr html ckeditor-->
-                <textarea class="ckeditor" name="contenido"></textarea>
+                <div class="form-group">
+                    <label asp-for="Texto" class="control-label"></label>
+                    <textarea asp-for="Texto" class="ckeditor"></textarea>
+                    @*<textarea class="ckeditor" name="contenido"></textarea>*@
+                </div>
             </div>
             @*Esto solo lo comento para probar que sucede si quito el IdPelicula y le dejo solo con Nombre
             <div class="form-group">

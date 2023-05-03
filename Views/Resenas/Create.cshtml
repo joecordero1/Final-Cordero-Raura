@@ -23,7 +23,7 @@
                 <!--Esto sirve para llamar al editor html ckeditor-->
                 <div class="form-group">
                     <label asp-for="Texto" class="control-label"></label>
-                    <textarea asp-for="Texto" class="form-control"></textarea>
+                    <textarea asp-for="Texto" class="ckeditor"></textarea>
                     @*<textarea class="ckeditor" name="contenido"></textarea>*@
                 </div>
             </div>
@@ -34,7 +34,7 @@
                 <span asp-validation-for="IdPelicula" class="text-danger"></span>
             </div>
             *@
-            @*Aqui agrego una espacio mas donde pruebo si es que sirve que me muestre el nombre de la pelicula en lugar del IdPelicula*@
+            @*Aqui agrego un espacio mas donde pruebo si es que sirve que me muestre el nombre de la pelicula en lugar del IdPelicula*@
             <div class="form-group">
                 <label asp-for="IdPelicula" class="control-label"></label>
                 <select asp-for="IdPelicula" class="form-control" asp-items="@ViewBag.Peliculas"></select>
